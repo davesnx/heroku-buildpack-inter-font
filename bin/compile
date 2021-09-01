@@ -19,19 +19,21 @@ BUILD_DIR=${1:-"./build"}
 CACHE_DIR=${2:-"./cache"}
 # BUILDPACK_DIR=$(dirname "$(dirname "$0")")
 
+mkdir -p "$BUILD_DIR"
 mkdir -p "$CACHE_DIR"
 ZIP_FILE="$CACHE_DIR/font.zip"
-TARGET_DIR="$BUILD_DIR/.fonts/"
+TARGET_DIR="$BUILD_DIR/.fonts"
 
 topic "Fetching fonts"
 curl -L --silent "https://fonts.google.com/download?family=Inter" --output "$ZIP_FILE"
-unzip -x "$ZIP_FILE" -d TARGET_DIR
+unzip -x "$ZIP_FILE" -d "$TARGET_DIR"
+cp -r "$TARGET_DIR/static/" "$TARGET_DIR"
+# cp -r "$TARGET_DIR/static/" "$TARGET_DIR/Inter"
 
 # Clean font cache
 fc-cache -fv
 
-# topic "List of $TARGET_DIR"
-# ls "$TARGET_DIR";
-
 topic "List of fonts"
 fc-list | grep "Inter"
+
+echo "Done" && exit 0
