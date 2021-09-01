@@ -15,7 +15,7 @@ mkdir -p "$CACHE_DIR"
 
 topic "Fetching fonts"
 cd "$CACHE_DIR"
-curl -L --silent "https://fonts.google.com/download?family=Inter" $url | tar x -z
+curl -L --silent "https://fonts.google.com/download?family=Inter" | tar x -z
 
 topic "Copying fonts to app folder"
 mkdir "$BUILD_DIR"/.fonts
