@@ -24,7 +24,7 @@ ZIP_FILE="font.zip"
 topic "Fetching fonts"
 cd "$CACHE_DIR"
 curl -L --silent "https://fonts.google.com/download?family=Inter" --output $ZIP_FILE
-tar -xvzf "$ZIP_FILE" -C . | indent
+unzip -xvzf "$ZIP_FILE" | indent
 
 topic "Copying fonts to app folder"
 mkdir "$BUILD_DIR"/.fonts
