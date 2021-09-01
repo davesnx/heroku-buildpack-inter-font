@@ -20,15 +20,12 @@ CACHE_DIR="$2"
 
 mkdir -p "$CACHE_DIR"
 ZIP_FILE="font.zip"
+TARGET_DIR="$BUILD_DIR/.fonts"
 
 topic "Fetching fonts"
 cd "$CACHE_DIR"
 curl -L --silent "https://fonts.google.com/download?family=Inter" --output $ZIP_FILE
-unzip -xvzf "$ZIP_FILE" | indent
-
-topic "Copying fonts to app folder"
-mkdir "$BUILD_DIR"/.fonts
-cp "$CACHE_DIR"/* "$BUILD_DIR"/.fonts/
+unzip -xvzf "$ZIP_FILE" -C "$TARGET_DIR" | indent
 
 # Clean font cache
 fc-cache -fv
