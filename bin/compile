@@ -6,17 +6,29 @@ function topic() {
   echo "-----> $*"
 }
 
-# parse and derive params
-BUILD_DIR=$1
-CACHE_DIR=$2
+function indent() {
+	c='s/^/       /'
+	case $(uname) in
+		Darwin) sed -l "$c";;
+		*)      sed -u "$c";;
+	esac
+}
+
+BUILD_DIR="$1"
+CACHE_DIR="$2"
 # BUILDPACK_DIR=$(dirname "$(dirname "$0")")
 
 mkdir -p "$CACHE_DIR"
+ZIP_FILE="font.zip"
 
 topic "Fetching fonts"
 cd "$CACHE_DIR"
-curl -L --silent "https://fonts.google.com/download?family=Inter" | tar x -z
+curl -L --silent "https://fonts.google.com/download?family=Inter" --output $ZIP_FILE
+tar -xvzf "$ZIP_FILE" -C . | indent
 
 topic "Copying fonts to app folder"
 mkdir "$BUILD_DIR"/.fonts
-cp "$CACHE_DIR"/fonts/* "$BUILD_DIR"/.fonts/
+cp "$CACHE_DIR"/* "$BUILD_DIR"/.fonts/
+
+# Clean font cache
+fc-cache -fv
