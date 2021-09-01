@@ -14,21 +14,24 @@ function indent() {
 	esac
 }
 
-BUILD_DIR="$1"
-CACHE_DIR="$2"
+# Default args to run it locally
+BUILD_DIR=${1:-"./build"}
+CACHE_DIR=${2:-"./cache"}
 # BUILDPACK_DIR=$(dirname "$(dirname "$0")")
 
 mkdir -p "$CACHE_DIR"
-ZIP_FILE="font.zip"
-TARGET_DIR="$BUILD_DIR/.fonts"
+ZIP_FILE="$CACHE_DIR/font.zip"
+TARGET_DIR="$BUILD_DIR/.fonts/"
 
 topic "Fetching fonts"
-cd "$CACHE_DIR"
-curl -L --silent "https://fonts.google.com/download?family=Inter" --output $ZIP_FILE
-unzip -xvzf "$ZIP_FILE" -C "$TARGET_DIR" | indent
+curl -L --silent "https://fonts.google.com/download?family=Inter" --output "$ZIP_FILE"
+unzip -x "$ZIP_FILE" -d TARGET_DIR
 
 # Clean font cache
 fc-cache -fv
+
+# topic "List of $TARGET_DIR"
+# ls "$TARGET_DIR";
 
 topic "List of fonts"
 fc-list | grep "Inter"
