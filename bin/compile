@@ -29,3 +29,6 @@ unzip -xvzf "$ZIP_FILE" -C "$TARGET_DIR" | indent
 
 # Clean font cache
 fc-cache -fv
+
+topic "List of fonts"
+fc-list | grep "Inter"
