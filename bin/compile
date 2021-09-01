@@ -27,8 +27,8 @@ TARGET_DIR="$BUILD_DIR/.fonts"
 topic "Fetching fonts"
 curl -L --silent "https://fonts.google.com/download?family=Inter" --output "$ZIP_FILE"
 unzip -x "$ZIP_FILE" -d "$TARGET_DIR"
-cp -r "$TARGET_DIR/static/" "$TARGET_DIR"
-# cp -r "$TARGET_DIR/static/" "$TARGET_DIR/Inter"
+cp -a "$TARGET_DIR/static/." "$TARGET_DIR/"
+cp -a "$TARGET_DIR/static/." "$TARGET_DIR/Inter"
 
 # Clean font cache
 fc-cache -fv
